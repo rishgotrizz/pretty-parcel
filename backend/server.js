@@ -13,8 +13,6 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-
-// serve frontend files (admin.html etc)
 app.use(express.static('public'));
 
 /* ================= DATABASE ================= */
@@ -203,8 +201,24 @@ app.get("/api/admin/orders", async (req, res) => {
             .sort({ createdAt: -1 });
 
         res.json(orders);
-    } catch (error) {
+    } catch {
         res.status(500).json({ message: "Failed to fetch orders" });
+    }
+});
+
+/* ===== ADMIN UPDATE ORDER STATUS ===== */
+
+app.put("/api/admin/orders/:id", async (req, res) => {
+    try {
+        const order = await Order.findByIdAndUpdate(
+            req.params.id,
+            { orderStatus: req.body.status },
+            { new: true }
+        );
+
+        res.json(order);
+    } catch {
+        res.status(500).json({ message: "Failed to update order" });
     }
 });
 
