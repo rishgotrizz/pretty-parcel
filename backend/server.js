@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// THIS LINE SERVES FILES FROM THE PUBLIC FOLDER
+// serve frontend files (admin.html etc)
 app.use(express.static('public'));
 
 /* ================= DATABASE ================= */
@@ -191,6 +191,20 @@ app.post("/api/orders/create", auth, async (req, res) => {
 
     } catch {
         res.status(500).json({ message: "Order failed" });
+    }
+});
+
+/* ===== ADMIN GET ORDERS ===== */
+
+app.get("/api/admin/orders", async (req, res) => {
+    try {
+        const orders = await Order.find()
+            .populate("userId", "name email")
+            .sort({ createdAt: -1 });
+
+        res.json(orders);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch orders" });
     }
 });
 
