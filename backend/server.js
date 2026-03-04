@@ -12,7 +12,10 @@ const app = express();
 /* ================= MIDDLEWARE ================= */
 
 app.use(express.json());
-app.use(cors()); // allow all origins
+app.use(cors());
+
+// THIS LINE SERVES FILES FROM THE PUBLIC FOLDER
+app.use(express.static('public'));
 
 /* ================= DATABASE ================= */
 
