@@ -1,5 +1,5 @@
 // ========== Configuration ==========
-const API_BASE_URL = 'http://localhost:5001/api';
+const API_BASE_URL = 'https://pretty-parcel.onrender.com/api';
 
 // Sample products data
 const products = [
